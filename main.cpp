@@ -7,18 +7,11 @@ class Exercise
 {
 private:
     std::string name;
-    int sets;
-    int reps;
     std::string muscleGroup;
 
 public:
-    Exercise(std::string name, int sets, int reps, std::string muscleGroup)
-        : name(name), sets(sets), reps(reps), muscleGroup(muscleGroup) {}
-
-    int getSets() const
-    {
-        return sets;
-    }
+    Exercise(std::string name, std::string muscleGroup)
+        : name(name), muscleGroup(muscleGroup) {}
 
     std::string getMuscleGroup() const
     {
@@ -27,7 +20,7 @@ public:
 
     std::string toString() const
     {
-        return name + " - " + std::to_string(sets) + " sets of " + std::to_string(reps) + " reps (Muscle Group: " + muscleGroup + ")";
+        return name + " (Muscle Group: " + muscleGroup + ")";
     }
 };
 
@@ -51,55 +44,55 @@ public:
     }
 };
 
-class Routine
-{
-private:
-    std::vector<std::vector<Exercise>> routines;
+// class Routine
+// {
+// private:
+//     std::vector<std::vector<Exercise>> routines;
 
-public:
-    Routine(int days)
-    {
-        routines.resize(days);
-    }
+// public:
+//     Routine(int days)
+//     {
+//         routines.resize(days);
+//     }
 
-    void addExercise(int day, const Exercise &exercise)
-    {
-        if (day >= 0 && day < routines.size())
-        {
-            routines[day].push_back(exercise);
-        }
-        else
-        {
-            std::cout << "Invalid day selected!" << std::endl;
-        }
-    }
+//     void addExercise(int day, const Exercise &exercise)
+//     {
+//         if (day >= 0 && day < routines.size())
+//         {
+//             routines[day].push_back(exercise);
+//         }
+//         else
+//         {
+//             std::cout << "Invalid day selected!" << std::endl;
+//         }
+//     }
 
-    void displayRoutine() const
-    {
-        for (int i = 0; i < routines.size(); i++)
-        {
-            std::cout << "Day " << (i + 1) << ":" << std::endl;
-            for (const auto &exercise : routines[i])
-            {
-                std::cout << exercise.toString() << std::endl;
-            }
-            std::cout << std::endl;
-        }
-    }
+//     void displayRoutine() const
+//     {
+//         for (int i = 0; i < routines.size(); i++)
+//         {
+//             std::cout << "Day " << (i + 1) << ":" << std::endl;
+//             for (const auto &exercise : routines[i])
+//             {
+//                 std::cout << exercise.toString() << std::endl;
+//             }
+//             std::cout << std::endl;
+//         }
+//     }
 
-    std::unordered_map<std::string, int> calculateSetsPerMuscleGroup() const
-    {
-        std::unordered_map<std::string, int> muscleGroupSets;
-        for (const auto &day : routines)
-        {
-            for (const auto &exercise : day)
-            {
-                muscleGroupSets[exercise.getMuscleGroup()] += exercise.getSets();
-            }
-        }
-        return muscleGroupSets;
-    }
-};
+//     std::unordered_map<std::string, int> calculateSetsPerMuscleGroup() const
+//     {
+//         std::unordered_map<std::string, int> muscleGroupSets;
+//         for (const auto &day : routines)
+//         {
+//             for (const auto &exercise : day)
+//             {
+//                 muscleGroupSets[exercise.getMuscleGroup()] += exercise.getSets();
+//             }
+//         }
+//         return muscleGroupSets;
+//     }
+// };
 
 int main()
 {
@@ -107,25 +100,25 @@ int main()
     for (int i = 1; i <= 4; i++)
     {
         std::string name;
-        std::cout << "Enter exercise name (or 'done' to finish for the day): ";
+        std::cout << "Enter exercise name: ";// (or 'done' to finish for the day): ";
         std::getline(std::cin, name);
-        if (name == "done")
-        {
-            break;
-        }
+        // if (name == "done")
+        // {
+        //     break;
+        // }
 
-        int sets, reps;
-        std::cout << "Enter number of sets: ";
-        std::cin >> sets;
-        std::cout << "Enter number of reps: ";
-        std::cin >> reps;
-        std::cin.ignore(); // Consume newline
+        // int sets, reps;
+        // std::cout << "Enter number of sets: ";
+        // std::cin >> sets;
+        // std::cout << "Enter number of reps: ";
+        // std::cin >> reps;
+        // std::cin.ignore(); // Consume newline
 
         std::string muscleGroup;
         std::cout << "Enter muscle group: ";
         std::getline(std::cin, muscleGroup);
 
-        Exercise exercise(name, sets, reps, muscleGroup);
+        Exercise exercise(name, muscleGroup);
         exercises.addExercise(exercise);
     }
     exercises.displayExercises();
