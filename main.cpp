@@ -3,7 +3,8 @@
 #include <unordered_map>
 #include <string>
 
-class Exercise {
+class Exercise
+{
 private:
     std::string name;
     int sets;
@@ -14,50 +15,85 @@ public:
     Exercise(std::string name, int sets, int reps, std::string muscleGroup)
         : name(name), sets(sets), reps(reps), muscleGroup(muscleGroup) {}
 
-    int getSets() const {
+    int getSets() const
+    {
         return sets;
     }
 
-    std::string getMuscleGroup() const {
+    std::string getMuscleGroup() const
+    {
         return muscleGroup;
     }
 
-    std::string toString() const {
+    std::string toString() const
+    {
         return name + " - " + std::to_string(sets) + " sets of " + std::to_string(reps) + " reps (Muscle Group: " + muscleGroup + ")";
     }
 };
 
-class Routine {
+class Exercises
+{
+private:
+    std::vector<Exercise> exercises;
+
+public:
+    void addExercise(const Exercise &exercise)
+    {
+        exercises.push_back(exercise);
+    }
+
+    void displayExercises()
+    {
+        for (Exercise exercise : exercises)
+        {
+            std::cout << exercise.toString() << std::endl;
+        }
+    }
+};
+
+class Routine
+{
 private:
     std::vector<std::vector<Exercise>> routines;
 
 public:
-    Routine(int days) {
+    Routine(int days)
+    {
         routines.resize(days);
     }
 
-    void addExercise(int day, const Exercise& exercise) {
-        if (day >= 0 && day < routines.size()) {
+    void addExercise(int day, const Exercise &exercise)
+    {
+        if (day >= 0 && day < routines.size())
+        {
             routines[day].push_back(exercise);
-        } else {
+        }
+        else
+        {
             std::cout << "Invalid day selected!" << std::endl;
         }
     }
 
-    void displayRoutine() const {
-        for (int i = 0; i < routines.size(); i++) {
+    void displayRoutine() const
+    {
+        for (int i = 0; i < routines.size(); i++)
+        {
             std::cout << "Day " << (i + 1) << ":" << std::endl;
-            for (const auto& exercise : routines[i]) {
+            for (const auto &exercise : routines[i])
+            {
                 std::cout << exercise.toString() << std::endl;
             }
             std::cout << std::endl;
         }
     }
 
-    std::unordered_map<std::string, int> calculateSetsPerMuscleGroup() const {
+    std::unordered_map<std::string, int> calculateSetsPerMuscleGroup() const
+    {
         std::unordered_map<std::string, int> muscleGroupSets;
-        for (const auto& day : routines) {
-            for (const auto& exercise : day) {
+        for (const auto &day : routines)
+        {
+            for (const auto &exercise : day)
+            {
                 muscleGroupSets[exercise.getMuscleGroup()] += exercise.getSets();
             }
         }
@@ -65,8 +101,36 @@ public:
     }
 };
 
-int main() {
-    int days;
+int main()
+{
+    Exercises exercises;
+    for (int i = 1; i <= 4; i++)
+    {
+        std::string name;
+        std::cout << "Enter exercise name (or 'done' to finish for the day): ";
+        std::getline(std::cin, name);
+        if (name == "done")
+        {
+            break;
+        }
+
+        int sets, reps;
+        std::cout << "Enter number of sets: ";
+        std::cin >> sets;
+        std::cout << "Enter number of reps: ";
+        std::cin >> reps;
+        std::cin.ignore(); // Consume newline
+
+        std::string muscleGroup;
+        std::cout << "Enter muscle group: ";
+        std::getline(std::cin, muscleGroup);
+
+        Exercise exercise(name, sets, reps, muscleGroup);
+        exercises.addExercise(exercise);
+    }
+    exercises.displayExercises();
+
+    /* int days;
     std::cout << "Enter the number of days for your workout routine (1-6): ";
     bool daysNum = false;
     while (!daysNum) {
@@ -78,20 +142,13 @@ int main() {
             else {
                 throw 505;
             }
-            
+
         }
         catch (...) {
             std::cout << "Please enter valid number" << std::endl;
         }
     }
-
-
     std::cin.ignore(); // Consume newline
-
-    if (days < 4 || days > 6) {
-        std::cout << "Invalid number of days. Please enter a value between 4 and 6." << std::endl;
-        return 1;
-    }
 
     Routine routine(days);
 
@@ -130,6 +187,6 @@ int main() {
     for (const auto& entry : setsPerMuscleGroup) {
         std::cout << entry.first << ": " << entry.second << " sets" << std::endl;
     }
-
+    */
     return 0;
 }
