@@ -33,29 +33,32 @@ public:
 class Exercises
 {
 private:
+    std::vector<Exercise> exercises;
 
 public:
     void addExercise(const Exercise &exercise)
     {
+        exercises.push_back(exercise);
+
         std::ofstream exercisesFile;
         exercisesFile.open("exercises.txt", std::ofstream::app);
         exercisesFile << exercise.toFileString() << std::endl;
         exercisesFile.close();
     }
 
-    // void displayExercises()
-    // {
-    //     int i = 1;
-    //     for (Exercise exercise : exercises)
-    //     {
-    //         std::cout << i << ": " << exercise.toString() << std::endl;
-    //         i++;
-    //     }
-    // }
+    void displayExercises()
+    {
+        int i = 1;
+        for (Exercise exercise : exercises)
+        {
+            std::cout << i << ": " << exercise.toString() << std::endl;
+            i++;
+        }
+    }
 
-    // Exercise getExercise(int i) {
-    //     return exercises[i-1];
-    // }
+    Exercise getExercise(int i) {
+        return exercises[i-1];
+    }
 };
 
 class ExerciseEntry
