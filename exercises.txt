@@ -1,0 +1,4 @@
+BP,Chest
+OHP,Shoudlers
+Curl,Bicep
+Ext,Tricep

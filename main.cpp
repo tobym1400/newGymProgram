@@ -2,6 +2,7 @@
 #include <vector>
 #include <unordered_map>
 #include <string>
+#include <fstream>
 
 class Exercise
 {
@@ -22,32 +23,39 @@ public:
     {
         return name + " (Muscle Group: " + muscleGroup + ") ";
     }
+
+    std::string toFileString() const
+    {
+        return name + "," + muscleGroup;
+    }
 };
 
 class Exercises
 {
 private:
-    std::vector<Exercise> exercises;
 
 public:
     void addExercise(const Exercise &exercise)
     {
-        exercises.push_back(exercise);
+        std::ofstream exercisesFile;
+        exercisesFile.open("exercises.txt", std::ofstream::app);
+        exercisesFile << exercise.toFileString() << std::endl;
+        exercisesFile.close();
     }
 
-    void displayExercises()
-    {
-        int i = 1;
-        for (Exercise exercise : exercises)
-        {
-            std::cout << i << ": " << exercise.toString() << std::endl;
-            i++;
-        }
-    }
+    // void displayExercises()
+    // {
+    //     int i = 1;
+    //     for (Exercise exercise : exercises)
+    //     {
+    //         std::cout << i << ": " << exercise.toString() << std::endl;
+    //         i++;
+    //     }
+    // }
 
-    Exercise getExercise(int i) {
-        return exercises[i-1];
-    }
+    // Exercise getExercise(int i) {
+    //     return exercises[i-1];
+    // }
 };
 
 class ExerciseEntry
@@ -152,7 +160,7 @@ int main()
         Exercise exercise(name, muscleGroup);
         exercises.addExercise(exercise);
     }
-    exercises.displayExercises();
+    // exercises.displayExercises();
 
     int days;
     std::cout << "Enter the number of days for your workout routine (1-6): ";
@@ -176,39 +184,39 @@ int main()
 
     Routine routine(days);
 
-    for (int i = 0; i < days; i++) {
-        std::cout << "Select exercises for day " << (i + 1) << ":" << std::endl;
+    // for (int i = 0; i < days; i++) {
+    //     std::cout << "Select exercises for day " << (i + 1) << ":" << std::endl;
 
-        while (true) {
-            int exerciseIndex;
-            std::cout << "Enter exercise index (or '0' to finish for the day): " << std::endl;
-            exercises.displayExercises();
-            std::cin >> exerciseIndex;
-            if (0 == exerciseIndex) {
-                break;
-            }
+    //     while (true) {
+    //         int exerciseIndex;
+    //         std::cout << "Enter exercise index (or '0' to finish for the day): " << std::endl;
+    //         exercises.displayExercises();
+    //         std::cin >> exerciseIndex;
+    //         if (0 == exerciseIndex) {
+    //             break;
+    //         }
 
-            int sets, reps;
-            std::cout << "Enter number of sets: ";
-            std::cin >> sets;
-            std::cout << "Enter number of reps: ";
-            std::cin >> reps;
-            std::cin.ignore(); // Consume newline
+    //         int sets, reps;
+    //         std::cout << "Enter number of sets: ";
+    //         std::cin >> sets;
+    //         std::cout << "Enter number of reps: ";
+    //         std::cin >> reps;
+    //         std::cin.ignore(); // Consume newline
 
-            Exercise exercise = exercises.getExercise(exerciseIndex);
-            ExerciseEntry exerciseEntry(exercise, sets, reps);
-            routine.addExercise(i, exerciseEntry);
-        }
-    }
+    //         Exercise exercise = exercises.getExercise(exerciseIndex);
+    //         ExerciseEntry exerciseEntry(exercise, sets, reps);
+    //         routine.addExercise(i, exerciseEntry);
+    //     }
+    // }
 
-    std::cout << "Your workout routine:" << std::endl;
-    routine.displayRoutine();
+    // std::cout << "Your workout routine:" << std::endl;
+    // routine.displayRoutine();
 
-    std::cout << "Total sets per muscle group per week:" << std::endl;
-    auto setsPerMuscleGroup = routine.calculateSetsPerMuscleGroup();
-    for (const auto& entry : setsPerMuscleGroup) {
-        std::cout << entry.first << ": " << entry.second << " sets" << std::endl;
-    }
+    // std::cout << "Total sets per muscle group per week:" << std::endl;
+    // auto setsPerMuscleGroup = routine.calculateSetsPerMuscleGroup();
+    // for (const auto& entry : setsPerMuscleGroup) {
+    //     std::cout << entry.first << ": " << entry.second << " sets" << std::endl;
+    // }
     
     return 0;
 }
