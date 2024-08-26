@@ -3,6 +3,7 @@
 #include <unordered_map>
 #include <string>
 #include <fstream>
+#include <sstream>
 
 class Exercise
 {
@@ -36,6 +37,20 @@ private:
     std::vector<Exercise> exercises;
 
 public:
+    Exercises() {
+        std::ifstream exercisesFile;
+        std::string name;
+        std::string muscleGroup;
+        exercisesFile.open("exercises.txt");
+        while (getline (exercisesFile, name, ',')) {
+            getline(exercisesFile,muscleGroup);
+            Exercise exercise(name, muscleGroup);
+            exercises.push_back(exercise);
+        }
+        exercisesFile.close();
+            
+    }
+
     void addExercise(const Exercise &exercise)
     {
         exercises.push_back(exercise);
@@ -146,24 +161,24 @@ public:
 int main()
 {
     Exercises exercises;
-    for (int i = 1; i <= 4; i++)
-    {
-        std::string name;
-        std::cout << "Enter exercise name: ";// (or 'done' to finish for the day): ";
-        std::getline(std::cin, name);
-        // if (name == "done")
-        // {
-        //     break;
-        // }
+    // for (int i = 1; i <= 4; i++)
+    // {
+    //     std::string name;
+    //     std::cout << "Enter exercise name: ";// (or 'done' to finish for the day): ";
+    //     std::getline(std::cin, name);
+    //     // if (name == "done")
+    //     // {
+    //     //     break;
+    //     // }
 
-        std::string muscleGroup;
-        std::cout << "Enter muscle group: ";
-        std::getline(std::cin, muscleGroup);
+    //     std::string muscleGroup;
+    //     std::cout << "Enter muscle group: ";
+    //     std::getline(std::cin, muscleGroup);
 
-        Exercise exercise(name, muscleGroup);
-        exercises.addExercise(exercise);
-    }
-    // exercises.displayExercises();
+    //     Exercise exercise(name, muscleGroup);
+    //     exercises.addExercise(exercise);
+    // }
+    exercises.displayExercises();
 
     int days;
     std::cout << "Enter the number of days for your workout routine (1-6): ";
