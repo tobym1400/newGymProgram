@@ -181,7 +181,7 @@ int main()
 
         while (true) {
             int exerciseIndex;
-            std::cout << "Enter exercise index (or '0' to finish for the day): ";
+            std::cout << "Enter exercise index (or '0' to finish for the day): " << std::endl;
             exercises.displayExercises();
             std::cin >> exerciseIndex;
             if (0 == exerciseIndex) {
