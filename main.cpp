@@ -90,7 +90,7 @@ public:
 
     std::string toString() const
     {
-        return exercise.toString() + std::to_string(reps) + " reps for " + std::to_string(sets) + " sets";
+        return exercise.toString() + std::to_string(sets) + " x " + std::to_string(reps);
     }
 
     std::string getMuscleGroup() const
