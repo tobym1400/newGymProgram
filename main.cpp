@@ -37,18 +37,19 @@ private:
     std::vector<Exercise> exercises;
 
 public:
-    Exercises() {
+    Exercises()
+    {
         std::ifstream exercisesFile;
         std::string name;
         std::string muscleGroup;
         exercisesFile.open("exercises.txt");
-        while (getline (exercisesFile, name, ',')) {
-            getline(exercisesFile,muscleGroup);
+        while (getline(exercisesFile, name, ','))
+        {
+            getline(exercisesFile, muscleGroup);
             Exercise exercise(name, muscleGroup);
             exercises.push_back(exercise);
         }
         exercisesFile.close();
-            
     }
 
     void addExercise(const Exercise &exercise)
@@ -71,8 +72,9 @@ public:
         }
     }
 
-    Exercise getExercise(int i) {
-        return exercises[i-1];
+    Exercise getExercise(int i)
+    {
+        return exercises[i - 1];
     }
 };
 
@@ -84,8 +86,7 @@ private:
     int sets;
 
 public:
-    ExerciseEntry(const Exercise &exercise, int reps, int sets) :
-        exercise(exercise), sets(sets), reps(reps) {}
+    ExerciseEntry(const Exercise &exercise, int reps, int sets) : exercise(exercise), sets(sets), reps(reps) {}
 
     std::string toString() const
     {
@@ -97,7 +98,7 @@ public:
         return exercise.getMuscleGroup();
     }
 
-    int getSets() 
+    int getSets()
     {
         return sets;
     }
@@ -158,83 +159,122 @@ public:
     }
 };
 
+int addExercises(Exercises exercises)
+{
+    while (true) {
+        std::string name;
+        std::cout << "Enter exercise name: (or 'done' to finish for the day):" << std::endl;
+        std::getline(std::cin, name);
+        if (name == "done")
+        {
+            return 0;
+        }
+        std::string muscleGroup;
+        std::cout << "Enter muscle group:" << std::endl;
+        std::getline(std::cin, muscleGroup);
+
+        Exercise exercise(name, muscleGroup);
+        exercises.addExercise(exercise);
+    }
+
+}
+
+// int createRoutine(Exercises exercises)
+// {
+//     int days;
+//     std::cout << "Enter the number of days for your workout routine (1-6): ";
+//     bool daysNum = false;
+//     while (!daysNum)
+//     {
+//         try
+//         {
+//             std::cin >> days;
+//             if (days >= 1 && days <= 6)
+//             {
+//                 daysNum = true;
+//             }
+//             else
+//             {
+//                 throw 505;
+//             }
+//         }
+//         catch (...)
+//         {
+//             std::cout << "Please enter valid number" << std::endl;
+//         }
+//     }
+//     std::cin.ignore(); // Consume newline
+
+//     Routine routine(days);
+
+//     for (int i = 0; i < days; i++)
+//     {
+//         std::cout << "Select exercises for day " << (i + 1) << ":" << std::endl;
+
+//         while (true)
+//         {
+//             int exerciseIndex;
+//             std::cout << "Enter exercise index (or '0' to finish for the day): " << std::endl;
+//             exercises.displayExercises();
+//             std::cin >> exerciseIndex;
+//             if (0 == exerciseIndex)
+//             {
+//                 break;
+//             }
+
+//             int sets, reps;
+//             std::cout << "Enter number of sets: ";
+//             std::cin >> sets;
+//             std::cout << "Enter number of reps: ";
+//             std::cin >> reps;
+//             std::cin.ignore(); // Consume newline
+
+//             Exercise exercise = exercises.getExercise(exerciseIndex);
+//             ExerciseEntry exerciseEntry(exercise, sets, reps);
+//             routine.addExercise(i, exerciseEntry);
+//         }
+//     }
+
+//     std::cout << "Your workout routine:" << std::endl;
+//     routine.displayRoutine();
+
+//     std::cout << "Total sets per muscle group per week:" << std::endl;
+//     auto setsPerMuscleGroup = routine.calculateSetsPerMuscleGroup();
+//     for (const auto &entry : setsPerMuscleGroup)
+//     {
+//         std::cout << entry.first << ": " << entry.second << " sets" << std::endl;
+//     }
+// }
+
 int main()
 {
     Exercises exercises;
-    // for (int i = 1; i <= 4; i++)
-    // {
-    //     std::string name;
-    //     std::cout << "Enter exercise name: ";// (or 'done' to finish for the day): ";
-    //     std::getline(std::cin, name);
-    //     // if (name == "done")
-    //     // {
-    //     //     break;
-    //     // }
 
-    //     std::string muscleGroup;
-    //     std::cout << "Enter muscle group: ";
-    //     std::getline(std::cin, muscleGroup);
+    int option;
 
-    //     Exercise exercise(name, muscleGroup);
-    //     exercises.addExercise(exercise);
-    // }
-    exercises.displayExercises();
+    while (true)
+    {
+        std::cout << "Please select option:" << std::endl;
+        std::cout << "1 - List Exercises" << std::endl;
+        std::cout << "2 - Add Exercises" << std::endl;
+        std::cout << "3 - Create Routine:" << std::endl;
 
-    int days;
-    std::cout << "Enter the number of days for your workout routine (1-6): ";
-    bool daysNum = false;
-    while (!daysNum) {
-        try {
-            std::cin >> days;
-            if (days >= 1 && days <= 6) {
-                daysNum = true;
-            }
-            else {
-                throw 505;
-            }
+        std::cin >> option;
+        std::cin.ignore();
 
+        switch (option)
+        {
+        case 1:
+            exercises.displayExercises();
+            break;
+        case 2:
+            addExercises(exercises);
+            break;
+        // case 3:
+        //     createRoutine(exercises);
+        //     break;
         }
-        catch (...) {
-            std::cout << "Please enter valid number" << std::endl;
-        }
+
+        return 0;
     }
-    std::cin.ignore(); // Consume newline
-
-    Routine routine(days);
-
-    // for (int i = 0; i < days; i++) {
-    //     std::cout << "Select exercises for day " << (i + 1) << ":" << std::endl;
-
-    //     while (true) {
-    //         int exerciseIndex;
-    //         std::cout << "Enter exercise index (or '0' to finish for the day): " << std::endl;
-    //         exercises.displayExercises();
-    //         std::cin >> exerciseIndex;
-    //         if (0 == exerciseIndex) {
-    //             break;
-    //         }
-
-    //         int sets, reps;
-    //         std::cout << "Enter number of sets: ";
-    //         std::cin >> sets;
-    //         std::cout << "Enter number of reps: ";
-    //         std::cin >> reps;
-    //         std::cin.ignore(); // Consume newline
-
-    //         Exercise exercise = exercises.getExercise(exerciseIndex);
-    //         ExerciseEntry exerciseEntry(exercise, sets, reps);
-    //         routine.addExercise(i, exerciseEntry);
-    //     }
-    // }
-
-    // std::cout << "Your workout routine:" << std::endl;
-    // routine.displayRoutine();
-
-    // std::cout << "Total sets per muscle group per week:" << std::endl;
-    // auto setsPerMuscleGroup = routine.calculateSetsPerMuscleGroup();
-    // for (const auto& entry : setsPerMuscleGroup) {
-    //     std::cout << entry.first << ": " << entry.second << " sets" << std::endl;
-    // }
-    
-    return 0;
 }
