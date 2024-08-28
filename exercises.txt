@@ -1,4 +1,24 @@
 BP,Chest
+Pec Dec,Chest
+Chest Supported Row,Back
+Seal Row,Back
+Cable Row,Back
+Pull Ups,Back
+Lat Pulldown,Back
+Lat Pushdown,Back
 OHP,Shoudlers
-Curl,Bicep
-Ext,Tricep
+Dumbbell Press,Back
+Lateral Raises,Shoulders
+Standing Bicep Curl,Biceps
+Incline Bicep Curl,Biceps
+Overhead Tricep Extension,Triceps
+Tricep Pushdown,Triceps
+Squat,Quads
+Leg Extension,Quads
+Hip Thrust,Glutes
+Deadlift,Hamstrings
+Romanian Deadlift,Hamstrings
+One Leg Calf Raise,Calves
+Decline Crunch,Abs
+Incline Leg Raises,Abs
+Modified Candlesticks,Abs
