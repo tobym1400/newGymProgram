@@ -256,6 +256,7 @@ int main()
     while (true)
     {
         std::cout << "Please select option:" << std::endl;
+        std::cout << "0 - Quit" << std::endl;
         std::cout << "1 - List Exercises" << std::endl;
         std::cout << "2 - Add Exercises" << std::endl;
         std::cout << "3 - Create Routine:" << std::endl;
@@ -265,6 +266,8 @@ int main()
 
         switch (option)
         {
+        case 0:
+            return 0;
         case 1:
             exercises.displayExercises();
             break;
@@ -273,6 +276,9 @@ int main()
             break;
         case 3:
             createRoutine(exercises);
+            break;
+        default:
+            std::cout << "Invalid input" << std::endl;
             break;
         }
     }
