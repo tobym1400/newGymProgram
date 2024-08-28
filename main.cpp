@@ -159,7 +159,7 @@ public:
     }
 };
 
-int addExercises(Exercises exercises)
+int addExercises(Exercises& exercises)
 {
     while (true) {
         std::string name;
@@ -179,72 +179,73 @@ int addExercises(Exercises exercises)
 
 }
 
-// int createRoutine(Exercises exercises)
-// {
-//     int days;
-//     std::cout << "Enter the number of days for your workout routine (1-6): ";
-//     bool daysNum = false;
-//     while (!daysNum)
-//     {
-//         try
-//         {
-//             std::cin >> days;
-//             if (days >= 1 && days <= 6)
-//             {
-//                 daysNum = true;
-//             }
-//             else
-//             {
-//                 throw 505;
-//             }
-//         }
-//         catch (...)
-//         {
-//             std::cout << "Please enter valid number" << std::endl;
-//         }
-//     }
-//     std::cin.ignore(); // Consume newline
+int createRoutine(Exercises& exercises)
+{
+    int days;
+    std::cout << "Enter the number of days for your workout routine (1-6): ";
+    bool daysNum = false;
+    while (!daysNum)
+    {
+        try
+        {
+            std::cin >> days;
+            if (days >= 1 && days <= 6)
+            {
+                daysNum = true;
+            }
+            else
+            {
+                throw 505;
+            }
+        }
+        catch (...)
+        {
+            std::cout << "Please enter valid number" << std::endl;
+        }
+    }
+    std::cin.ignore(); // Consume newline
 
-//     Routine routine(days);
+    Routine routine(days);
 
-//     for (int i = 0; i < days; i++)
-//     {
-//         std::cout << "Select exercises for day " << (i + 1) << ":" << std::endl;
+    for (int i = 0; i < days; i++)
+    {
+        std::cout << "Select exercises for day " << (i + 1) << ":" << std::endl;
 
-//         while (true)
-//         {
-//             int exerciseIndex;
-//             std::cout << "Enter exercise index (or '0' to finish for the day): " << std::endl;
-//             exercises.displayExercises();
-//             std::cin >> exerciseIndex;
-//             if (0 == exerciseIndex)
-//             {
-//                 break;
-//             }
+        while (true)
+        {
+            int exerciseIndex;
+            std::cout << "Enter exercise index (or '0' to finish for the day): " << std::endl;
+            exercises.displayExercises();
+            std::cin >> exerciseIndex;
+            if (0 == exerciseIndex)
+            {
+                break;
+            }
 
-//             int sets, reps;
-//             std::cout << "Enter number of sets: ";
-//             std::cin >> sets;
-//             std::cout << "Enter number of reps: ";
-//             std::cin >> reps;
-//             std::cin.ignore(); // Consume newline
+            int sets, reps;
+            std::cout << "Enter number of sets: ";
+            std::cin >> sets;
+            std::cout << "Enter number of reps: ";
+            std::cin >> reps;
+            std::cin.ignore(); // Consume newline
 
-//             Exercise exercise = exercises.getExercise(exerciseIndex);
-//             ExerciseEntry exerciseEntry(exercise, sets, reps);
-//             routine.addExercise(i, exerciseEntry);
-//         }
-//     }
+            Exercise exercise = exercises.getExercise(exerciseIndex);
+            ExerciseEntry exerciseEntry(exercise, sets, reps);
+            routine.addExercise(i, exerciseEntry);
+        }
+    }
 
-//     std::cout << "Your workout routine:" << std::endl;
-//     routine.displayRoutine();
+    std::cout << "Your workout routine:" << std::endl;
+    routine.displayRoutine();
 
-//     std::cout << "Total sets per muscle group per week:" << std::endl;
-//     auto setsPerMuscleGroup = routine.calculateSetsPerMuscleGroup();
-//     for (const auto &entry : setsPerMuscleGroup)
-//     {
-//         std::cout << entry.first << ": " << entry.second << " sets" << std::endl;
-//     }
-// }
+    std::cout << "Total sets per muscle group per week:" << std::endl;
+    auto setsPerMuscleGroup = routine.calculateSetsPerMuscleGroup();
+    for (const auto &entry : setsPerMuscleGroup)
+    {
+        std::cout << entry.first << ": " << entry.second << " sets" << std::endl;
+    }
+    return 0;
+}
 
 int main()
 {
@@ -270,11 +271,10 @@ int main()
         case 2:
             addExercises(exercises);
             break;
-        // case 3:
-        //     createRoutine(exercises);
-        //     break;
+        case 3:
+            createRoutine(exercises);
+            break;
         }
-
-        return 0;
     }
+    return 0;
 }
